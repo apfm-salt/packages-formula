@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "./map.jinja" import packages with context %}
+{%- from "packages/map.jinja" import packages with context %}
 
 # As we are 'extend'ing pkg_req_pkgs and unwanted_pkgs, we need to concatenate
 # the attributes correctly (see #17)
