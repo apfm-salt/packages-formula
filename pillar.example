@@ -64,9 +64,9 @@ packages:
 
   chocolatey:
     wanted:
-      Firefox:
+      - Firefox:
         package_args: "/l:en-GB"
-      packagename:
+      - packagename:
         version: '12.04'
         source: 'mychocolatey/source'
         force: true

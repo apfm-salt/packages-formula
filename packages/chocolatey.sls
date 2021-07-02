@@ -25,10 +25,12 @@ chocolatey_req_pkgs:
 
 ### CHOCOLATEY PACKAGES to install
       {%- if wanted_chocolatey %}
-        {%- for choco, settings in wanted_chocolatey.items() %}
-{{ choco }}:
+        {%- for choco in wanted_chocolatey %}
+          {%- if choco is mapping %}
+            {%- for choco_name, settings in choco.items() %}
+{{ choco_name }}:
   chocolatey.installed:
-    - name: {{ choco }}
+    - name: {{ choco_name }}
     - version: {{ '' if 'version' not in settings else settings.version }}
     - source: {{ '' if 'source' not in settings else settings.source }}
     - force: {{ False if 'force' not in settings else settings.force }}
@@ -40,7 +42,15 @@ chocolatey_req_pkgs:
     - allow_multiple: {{ False if 'allow_multiple' not in settings else settings.allow_multiple }}
     - require:
       - pkg: chocolatey_req_pkgs
-        {%- endfor %}
+              {%- endfor %}
+            {%- else %}
+{{ choco }}:
+  chocolatey.installed:
+    - name: {{ choco }}
+    - require:
+      - pkg: chocolatey_req_pkgs
+            {%- endif %}
+          {%- endfor %}
       {%- endif %}
 
 ### CHOCOLATEY PACKAGES to uninstall
